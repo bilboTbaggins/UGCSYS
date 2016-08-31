@@ -33,18 +33,7 @@ public class DatabaseConnection {
             System.out.println("connecting to a database");
             conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
 
-            stmt = conn.createStatement();
-            String sql;
-            sql = "SELECT user_password FROM user";
-            ResultSet rs = stmt.executeQuery(sql);
-
-            while (rs.next()) {
-                String name = rs.getString("user_password");
-                System.out.println("Password: " + name);
-            }
-
-            rs.close();
-            stmt.close();
+           
             conn.close();
         } catch (SQLException se) {
             se.printStackTrace();
