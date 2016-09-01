@@ -5,6 +5,7 @@
  */
 package controller;
 
+import database.LoginQueries;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -53,17 +54,18 @@ public class LoginController implements Initializable {
         String username = usernameTextField.getText();
         String password = passwordField.getText();
 
-        if (user(username, password) != null) {
-            {
-                ((Node) (event.getSource())).getScene().getWindow().hide();
-                Parent parent = FXMLLoader.load(LoginController.class.getClassLoader().getResource("view/Home.fxml"));
-                Stage stage = new Stage();
-                Scene scene = new Scene(parent);
-                stage.setScene(scene);
-                stage.setTitle("Home");
-                stage.show();
-            }
-        } else {
+        LoginQueries lq = new LoginQueries();
+
+        if (lq.checkPassword(username, password)) {
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+            Parent parent = FXMLLoader.load(LoginController.class.getClassLoader().getResource("view/Home.fxml"));
+            Stage stage = new Stage();
+            Scene scene = new Scene(parent);
+            stage.setScene(scene);
+            stage.setTitle("Home");
+            stage.show();
+
+        }else {
             lblMessage.setText("That email/password didn't work.\n"
                     + "Please try again.");
             

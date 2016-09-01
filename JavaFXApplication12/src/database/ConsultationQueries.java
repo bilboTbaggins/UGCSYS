@@ -12,12 +12,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import model.Consultation;
 
 /**
  *
  * @author Pudji
  */
-public class ConsultationQueries {
+public class ConsultationQueries extends DatabaseConnection {
     
     public void insertConsultation (Consultation toInsert) {
         int returnValue = -1;
@@ -25,13 +26,13 @@ public class ConsultationQueries {
             PreparedStatement insertConsultation = conn.prepareStatement(
                     "insert into app.consultation (idconsultation, student_id, consulationdescription, consulationdate, consulationtime, consulationpriority, consulationreason) values (?,?,?,?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
-            insertConsultation.setString(1, toInsert.getIdConsultation());
-            insertConsultation.setString(2, toInsert.getStudent_id());
-            insertConsultation.setString(3, toInsert.getConsulationDescription());
-            insertConsultation.setString(4, toInsert.getConsulationDate());
-            insertConsultation.setString(5, toInsert.getConsulationTime());
-            insertConsultation.setString(6, toInsert.getConsulationPriority());
-            insertConsultation.setString(7, toInsert.getConsulationReason());
+            insertConsultation.setInt(1, toInsert.getId());
+            insertConsultation.setInt(2, toInsert.getStudent());
+            insertConsultation.setString(3, toInsert.getDescription());
+            insertConsultation.setString(4, toInsert.getDate());
+            insertConsultation.setString(5, toInsert.getTime());
+            insertConsultation.setString(6, toInsert.getPriority());
+            insertConsultation.setString(7, toInsert.getReason());
             insertConsultation.executeUpdate();
             ResultSet rs = insertConsultation.getGeneratedKeys();
             rs.next();
@@ -42,6 +43,6 @@ public class ConsultationQueries {
             ex.printStackTrace();
         }
         closeConnection();
-        return returnValue;
+        
     }
 }
