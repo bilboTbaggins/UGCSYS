@@ -5,7 +5,6 @@
  */
 package database;
 
-//import employeeproject.Employee;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,7 +23,10 @@ public class ConsultationQueries extends DatabaseConnection {
         int returnValue = -1;
         try {
             PreparedStatement insertConsultation = conn.prepareStatement(
-                    "insert into app.consultation (idconsultation, student_id, consulationdescription, consulationdate, consulationtime, consulationpriority, consulationreason) values (?,?,?,?,?,?,?)",
+                    "insert into app.consultation (idconsultation, student_id, "
+                            + "consulationdescription, consulationdate, "
+                            + "consulationtime, consulationpriority, "
+                            + "consulationreason) values (?,?,?,?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
             insertConsultation.setInt(1, toInsert.getId());
             insertConsultation.setInt(2, toInsert.getStudent());
@@ -44,5 +46,28 @@ public class ConsultationQueries extends DatabaseConnection {
         }
         closeConnection();
         
+    }
+    
+    public List<Consultation> getConsultation() {
+        List<Consultation> shows = new ArrayList<Consultation>();
+        openConnection();
+        try {
+            PreparedStatement getAllShows = conn.prepareStatement(
+                    "select * from app.consultation");
+            ResultSet rs = getAllShows.executeQuery();
+            while (rs.next()) {
+                Consultation consul = new Consultation(rs.getInt("idconsultation"), 
+                        rs.getInt("student_id"), rs.getString("consulationdescription"), 
+                        rs.getString("consulationdate"), rs.getString("consulationtime"), 
+                        rs.getString("consulationpriority"), rs.getString("consulationreason"));
+                shows.add(consul);
+            }
+            rs.close();
+            getAllShows.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        closeConnection();
+        return shows;
     }
 }
