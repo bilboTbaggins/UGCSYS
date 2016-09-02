@@ -25,7 +25,7 @@
  
      @Override
      public void start(Stage stage) throws Exception {
-         Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+         Parent root = FXMLLoader.load(getClass().getResource("view.Login.fxml"));
  
          Scene scene = new Scene(root);
  
@@ -36,15 +36,11 @@
      /**
       * @param args the command line arguments
       */
-     
- 
-     /**
-      * @param args the command line arguments
-      */
      public static void main(String[] args) {
          launch(args);
         
  
      }
  }
+
  

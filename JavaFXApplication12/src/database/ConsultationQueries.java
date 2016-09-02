@@ -24,7 +24,12 @@ public class ConsultationQueries extends DatabaseConnection {
         int returnValue = -1;
         try {
             PreparedStatement insertConsultation = conn.prepareStatement(
-                    "insert into consultation (idconsultation, student_id, consulationdescription, consulationdate, consulationtime, consulationpriority, consulationreason) values (?,?,?,?,?,?,?)",
+
+                    "insert into app.consultation (idconsultation, student_id, "
+                            + "consulationdescription, consulationdate, "
+                            + "consulationtime, consulationpriority, "
+                            + "consulationreason) values (?,?,?,?,?,?,?)",
+
                     Statement.RETURN_GENERATED_KEYS);
             insertConsultation.setInt(1, toInsert.getId());
             insertConsultation.setInt(2, toInsert.getStudent());
@@ -46,6 +51,7 @@ public class ConsultationQueries extends DatabaseConnection {
         
     }
     
+
     public List<Consultation> getFutureConsultation() {
         List<Consultation> futureConsultation = new ArrayList<Consultation>();
         openConnection();
@@ -65,5 +71,6 @@ public class ConsultationQueries extends DatabaseConnection {
         }
        closeConnection(); 
        return futureConsultation;
+
     }
 }
