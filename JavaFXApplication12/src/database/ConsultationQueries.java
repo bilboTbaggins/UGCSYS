@@ -5,7 +5,6 @@
  */
 package database;
 
-//import employeeproject.Employee;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,11 +19,12 @@ import model.Consultation;
  */
 public class ConsultationQueries extends DatabaseConnection {
     
+    //method for inserting a consultation into the db as a Consultation object is created
     public void insertConsultation (Consultation toInsert) {
         int returnValue = -1;
         try {
             PreparedStatement insertConsultation = conn.prepareStatement(
-                    "insert into app.consultation (idconsultation, student_id, consulationdescription, consulationdate, consulationtime, consulationpriority, consulationreason) values (?,?,?,?,?,?,?)",
+                    "insert into consultation (idconsultation, student_id, consulationdescription, consulationdate, consulationtime, consulationpriority, consulationreason) values (?,?,?,?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
             insertConsultation.setInt(1, toInsert.getId());
             insertConsultation.setInt(2, toInsert.getStudent());
@@ -44,5 +44,26 @@ public class ConsultationQueries extends DatabaseConnection {
         }
         closeConnection();
         
+    }
+    
+    public List<Consultation> getFutureConsultation() {
+        List<Consultation> futureConsultation = new ArrayList<Consultation>();
+        openConnection();
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM consultation WHERE consulationdate > SYSDATE()";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                futureConsultation.add(
+                new Consultation (rs.getInt("id"),rs.getString("description"), rs.getString("date"), rs.getString("time"),
+                        rs.getString("priority"), rs.getString("reason"), rs.getInt("student")));
+                        
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+       closeConnection(); 
+       return futureConsultation;
     }
 }

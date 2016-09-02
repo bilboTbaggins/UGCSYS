@@ -19,16 +19,16 @@ import java.sql.Statement;
  */
 public class DatabaseConnection {
 
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://104.199.187.239:3306/sample";
+    protected static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    protected static final String DB_URL = "jdbc:mysql://104.199.187.239:3306/sample";
 
-    static final String USER = "root";
-    static final String PASSWORD = "google";
+    protected static final String USER = "root";
+    protected static final String PASSWORD = "google";
 
-    Connection conn = null;
-    Statement stmt = null;
+    protected Connection conn = null;
+    protected Statement stmt = null;
 
-    public void openConnection() {
+    protected void openConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
 
@@ -42,7 +42,7 @@ public class DatabaseConnection {
         }
     }
 
-    public void closeConnection() {
+    protected void closeConnection() {
         try {
             if (conn != null) {
                 conn.close();

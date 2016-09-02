@@ -12,6 +12,7 @@ import java.sql.Statement;
 
 
 
+
 /**
  *
  * @author Pudji
@@ -21,12 +22,10 @@ public class LoginQueries extends DatabaseConnection {
     //method that retrieves the username and password from the database to be used
     //for authentication
     public boolean checkPassword (String zID, String password) {
-        LoginQueries loginQueries = new LoginQueries();
         
+        LoginQueries loginQueries = new LoginQueries();
         ResultSet rs;
         openConnection();
-       
-        
         
         if (conn != null) {
             try {
@@ -41,12 +40,17 @@ public class LoginQueries extends DatabaseConnection {
                         return true;
                     }  
                 }
+                rs.close();
+                conn.close();
+                stmt.close();
            
             } catch (SQLException e) {
                 e.printStackTrace();
                 return false;
             } 
         }
+        closeConnection();
         return false;
     }
+    
 }
