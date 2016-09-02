@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.util.*;
 /**
  *
  * @author Stephanie
@@ -18,6 +19,18 @@ public class Consultation {
     private String reason;
     private int student;
 
+    //Constructor
+    public Consultation(int id, int studentID, String description, String date, 
+            String time, String priority, String reason){
+        this.id = id;
+        this.student = studentID;
+        this.description = description;
+        this.date = date;
+        this.time = time;
+        this.priority = priority;
+        this.reason = reason;
+    }
+    
     public int getId() {
         return id;
     }
