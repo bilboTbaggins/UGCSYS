@@ -18,6 +18,7 @@ public class Consultation {
     private String reason;
     private int student;
 
+    //constructor
     public Consultation(int id, String description, String date, String time, String priority, String reason, int student) {
         this.id = id;
         this.description = description;
